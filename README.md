@@ -1,3 +1,11 @@
+This is a program that helps you to delete beatmaps that are not in any collection in osu! lazer.
+
+---
+
+README of original repo
+
+---
+
 # BeatmapExporter (for osu!lazer)
 
 ### Support the Developer
