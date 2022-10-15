@@ -1,7 +1,7 @@
 ﻿// Original source file (modified by kabii) Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 using Realms;
 
-namespace BeatmapExporter.Exporters.Lazer.LazerDB.Schema
+namespace BeatmapRemover.LazerDB.Schema
 {
     public class Beatmap : RealmObject
     {
@@ -15,6 +15,8 @@ namespace BeatmapExporter.Exporters.Lazer.LazerDB.Schema
         public BeatmapDifficulty Difficulty { get; set; } = null!;
 
         public BeatmapMetadata Metadata { get; set; } = null!;
+
+        public BeatmapUserSettings UserSettings { get; set; } = null!;
 
         public BeatmapSet? BeatmapSet { get; set; }
 
@@ -65,6 +67,8 @@ namespace BeatmapExporter.Exporters.Lazer.LazerDB.Schema
         public int GridSize { get; set; }
 
         public double TimelineZoom { get; set; }
+
+        public int CountdownOffset { get; set; }
 
         // Author kabii
         public override bool Equals(object obj)

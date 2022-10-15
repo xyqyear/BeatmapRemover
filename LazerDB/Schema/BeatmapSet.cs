@@ -2,7 +2,7 @@
 using Realms;
 using System.Text;
 
-namespace BeatmapExporter.Exporters.Lazer.LazerDB.Schema
+namespace BeatmapRemover.LazerDB.Schema
 {
     public class BeatmapSet : RealmObject
     {
@@ -15,6 +15,7 @@ namespace BeatmapExporter.Exporters.Lazer.LazerDB.Schema
         public DateTimeOffset? DateRanked { get; set; }
         public IList<Beatmap> Beatmaps { get; } = null!;
         public IList<RealmNamedFileUsage> Files { get; } = null!;
+        public int Status { get; set; }
         public bool DeletePending { get; set; }
         public string Hash { get; set; } = string.Empty;
         public bool Protected { get; set; }
@@ -55,15 +56,6 @@ namespace BeatmapExporter.Exporters.Lazer.LazerDB.Schema
                 .Append(difficultySpread)
                 .Append(" stars)");
             return output.ToString();
-        }
-
-        public string ArchiveFilename()
-        {
-            BeatmapMetadata metadata = SelectedBeatmaps.First().Metadata;
-            string beatmapId = OnlineID != -1 ? $"{OnlineID} " : "";
-            return
-                $"{beatmapId}{metadata.Artist.Trunc(30)} - {metadata.Title.Trunc(40)} ({metadata.Author.Username.Trunc(30)}).osz"
-                .RemoveFilenameCharacters();
         }
     }
 }

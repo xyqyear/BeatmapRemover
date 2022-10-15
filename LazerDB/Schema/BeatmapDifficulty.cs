@@ -1,7 +1,7 @@
 ﻿// Original source file (modified by kabii) Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 using Realms;
 
-namespace BeatmapExporter.Exporters.Lazer.LazerDB.Schema
+namespace BeatmapRemover.LazerDB.Schema
 {
     public class BeatmapDifficulty : EmbeddedObject
     {

@@ -1,8 +1,8 @@
-﻿using BeatmapExporter.Exporters.Lazer.LazerDB.Schema;
+﻿using BeatmapRemover.LazerDB.Schema;
 using Realms;
 using Realms.Exceptions;
 
-namespace BeatmapExporter.Exporters.Lazer.LazerDB
+namespace BeatmapRemover.LazerDB
 {
     public class LazerDatabase
     {
@@ -41,7 +41,7 @@ namespace BeatmapExporter.Exporters.Lazer.LazerDB
         {
             RealmConfiguration config = new(database)
             {
-                IsReadOnly = true,
+                // IsReadOnly = true,
                 SchemaVersion = LazerSchemaVersion
             };
             config.Schema = new[] {
@@ -52,6 +52,7 @@ namespace BeatmapExporter.Exporters.Lazer.LazerDB
                 typeof(BeatmapSet),
                 typeof(RealmFile),
                 typeof(RealmNamedFileUsage),
+                typeof(BeatmapUserSettings),
                 typeof(RealmUser),
                 typeof(Ruleset),
                 typeof(ModPreset)
@@ -73,7 +74,7 @@ namespace BeatmapExporter.Exporters.Lazer.LazerDB
             }
         }
 
-        string HashedFilePath(string hash) => Path.Combine(filesDirectory, hash[..1], hash[..2], hash);
+        public string HashedFilePath(string hash) => Path.Combine(filesDirectory, hash[..1], hash[..2], hash);
 
         public FileStream? OpenHashedFile(string hash)
         {
@@ -85,27 +86,6 @@ namespace BeatmapExporter.Exporters.Lazer.LazerDB
             catch (IOException ioe)
             {
                 Console.WriteLine($"Unable to open file: {hash} :: {ioe.Message}");
-                return null;
-            }
-        }
-
-        public FileStream? OpenNamedFile(BeatmapSet set, string filename)
-        {
-            // get named file from specific beatmap - check if it exists in this beatmap
-            string? fileHash = set.Files.FirstOrDefault(f => f.Filename == filename)?.File?.Hash;
-            if(fileHash is null)
-            {
-                Console.WriteLine($"File {filename} not found in beatmap {set.ArchiveFilename()}");
-                return null;
-            }
-            try
-            {
-                string path = HashedFilePath(fileHash);
-                return File.Open(path, FileMode.Open);
-            }
-            catch (IOException ioe)
-            {
-                Console.WriteLine($"Unable to open file: {filename} from beatmap {set.ArchiveFilename()} :: {ioe.Message}");
                 return null;
             }
         }
