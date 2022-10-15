@@ -20,7 +20,6 @@ foreach (var mapset in realm.All<BeatmapSet>())
     if (mapset.Beatmaps.All(map => !inCollectionMaps.Contains(map.MD5Hash)))
     {
         realm.Write(() => mapset.DeletePending = true);
-        Console.WriteLine("after");
     }
     progress++;
     Console.WriteLine($"\r{progress}/{mapsetCount} {mapset.Beatmaps.First().Metadata.Title}");
